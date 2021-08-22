@@ -33,6 +33,11 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-jooq")
 //    implementation("org.flywaydb:flyway-core")
 
+    implementation(platform("software.amazon.awssdk:bom:2.17.24"))
+    implementation("software.amazon.awssdk:s3")
+    implementation("io.minio:minio:8.3.0")
+    implementation("io.findify:s3mock_2.13:0.2.6")
+
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
