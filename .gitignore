@@ -6,3 +6,6 @@ build
 
 .idea/*
 !.idea/runConfigurations*
+
+# s3mock
+app/memetiq-bucket/*

@@ -1,8 +1,10 @@
 package systems.memetic.memetiq.domain;
 
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
-public abstract class Media {
-    public String name;
-    public BufferedImage image;
+public record Media(
+    String name,
+    URL url
+) {
 }

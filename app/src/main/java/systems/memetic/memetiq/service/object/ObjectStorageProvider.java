@@ -1,15 +1,14 @@
 package systems.memetic.memetiq.service.object;
 
-import org.springframework.stereotype.Service;
 import systems.memetic.memetiq.domain.Media;
 
-import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.List;
 
 public interface ObjectStorageProvider {
-    List<Media> getAll();
+    List<Media> listAll();
 
-    Media getByName(String name);
+    Boolean checkKeyExists(String name);
 
-    void add(String name, BufferedImage media);
+    URL add(String name, byte[] media);
 }
