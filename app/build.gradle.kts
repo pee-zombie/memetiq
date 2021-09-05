@@ -1,4 +1,5 @@
 import nu.studer.gradle.jooq.JooqEdition
+import nu.studer.gradle.jooq.JooqGenerate
 import org.jooq.meta.jaxb.Property
 
 plugins {
@@ -12,7 +13,13 @@ plugins {
 
 group = "systems.memetic"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_16
+java {
+    sourceCompatibility = JavaVersion.VERSION_16
+
+    sourceSets["main"].java {
+        srcDir("src/generated")
+    }
+}
 
 application {
     mainClass.set("systems.memetic.memetiq.MemetiqApplication")
@@ -85,7 +92,7 @@ jooq {
 
                     target.apply {
                         packageName = "systems.memetic.memetiq"
-                        directory = "src/generated/jooq/"
+                        directory = "src/generated/jooq"
                     }
                     strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
 
@@ -95,7 +102,7 @@ jooq {
     }
 }
 
-tasks.named<nu.studer.gradle.jooq.JooqGenerate>("generateJooq") {
+tasks.named<JooqGenerate>("generateJooq") {
     allInputsDeclared.set(true)
 }
 
@@ -114,6 +121,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("com.h2database:h2")
+    implementation("io.r2dbc:r2dbc-h2")
 //    implementation("org.flywaydb:flyway-core")
 
     implementation(platform("software.amazon.awssdk:bom:2.17.24"))

@@ -4,6 +4,10 @@
 # Ignore Gradle build output directory
 build
 
+# ignore jooq generated classes
+app/src/generated/*
+app/data/*
+
 .idea/*
 !.idea/runConfigurations*
 

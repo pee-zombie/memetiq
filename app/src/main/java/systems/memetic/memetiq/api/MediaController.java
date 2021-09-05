@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import systems.memetic.memetiq.domain.Media;
+import systems.memetic.memetiq.service.media.MediaService;
 import systems.memetic.memetiq.service.object.ObjectService;
 
 import java.net.URL;
@@ -19,10 +20,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MediaController {
     private final ObjectService objectService;
+    private final MediaService mediaService;
 
     @GetMapping("/media")
     public List<Media> listMedia() {
         return objectService.listAllMedia();
+    }
+
+    @GetMapping("/media/names")
+    public List<String> listMediaNames() {
+        return mediaService.getAll();
     }
 
     @GetMapping("/media/{name}")
