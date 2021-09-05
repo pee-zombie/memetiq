@@ -129,6 +129,16 @@ dependencies {
     implementation("io.minio:minio:8.3.0")
     implementation("io.findify:s3mock_2.13:0.2.6")
 
+    implementation("org.slf4j:slf4j-api:1.7.32")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
+
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
@@ -144,3 +154,4 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
