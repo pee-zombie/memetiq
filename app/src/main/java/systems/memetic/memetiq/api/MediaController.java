@@ -46,6 +46,6 @@ public class MediaController {
                 multipartFile.getOriginalFilename()
             ).orElseThrow(Exception::new));
 
-        return objectService.store(name, multipartFile.getBytes()).toString();
+        return mediaService.addMedia(name, multipartFile.getBytes());
     }
 }
