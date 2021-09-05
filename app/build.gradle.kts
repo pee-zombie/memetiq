@@ -32,7 +32,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
-//    implementation("org.springframework.boot:spring-boot-starter-jooq")
+    implementation("org.springframework.boot:spring-boot-starter-jooq")
+    implementation("com.h2database:h2")
 //    implementation("org.flywaydb:flyway-core")
 
     implementation(platform("software.amazon.awssdk:bom:2.17.24"))

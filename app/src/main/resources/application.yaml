@@ -6,3 +6,15 @@ mock-backend:
   enabled: true
   port: 8001
   path: memetiq-bucket
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/db
+    username:
+    password:
+  h2:
+    console:
+      enabled: true
+  sql:
+    init:
+      mode: always
