@@ -33,12 +33,12 @@ public class MediaController {
 
     @SneakyThrows
     @PostMapping("/media/{name}")
-    public URL addMedia(@PathVariable("name") String name, @RequestParam("image") MultipartFile multipartFile) {
+    public String addMedia(@PathVariable("name") String name, @RequestParam("image") MultipartFile multipartFile) {
         String fileName = StringUtils.cleanPath(
             Optional.ofNullable(
                 multipartFile.getOriginalFilename()
             ).orElseThrow(Exception::new));
 
-        return objectService.store(name, multipartFile.getBytes());
+        return objectService.store(name, multipartFile.getBytes()).toString();
     }
 }
