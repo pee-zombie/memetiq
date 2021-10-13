@@ -13,7 +13,6 @@ import systems.memetic.memetiq.service.object.ObjectService;
 import systems.memetic.memetiq.tables.records.MediaRecord;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
