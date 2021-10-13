@@ -23,7 +23,7 @@ public class MediaController {
 
 
     @GetMapping("/media/{name}")
-    public Media getMedia(String name) throws Exception {
+    public Media getMedia(@PathVariable("name") String name) throws Exception {
         return mediaService.getByName(name).orElseThrow(() ->
             new Exception("Media not found"));
     }
