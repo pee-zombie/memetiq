@@ -103,6 +103,7 @@ jooq {
 }
 
 tasks.named<JooqGenerate>("generateJooq") {
+    inputs.file("src/main/resources/data.sql")
     allInputsDeclared.set(true)
 }
 
