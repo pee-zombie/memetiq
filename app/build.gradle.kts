@@ -145,6 +145,8 @@ dependencies {
     jooqGenerator("org.jooq:jooq-meta-extensions:3.15.2")
     jooqGenerator("com.h2database:h2:1.4.200")
 
+    implementation("io.vavr:vavr:1.0.0-alpha-3")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
