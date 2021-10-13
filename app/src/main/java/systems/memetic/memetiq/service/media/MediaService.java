@@ -1,21 +1,22 @@
 package systems.memetic.memetiq.service.media;
 
+import io.vavr.CheckedFunction1;
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
-import org.jooq.Record;
 import org.jooq.Result;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
+import systems.memetic.memetiq.domain.Media;
 import systems.memetic.memetiq.service.object.ObjectService;
-import systems.memetic.memetiq.tables.Media;
-
-import static systems.memetic.memetiq.Tables.*;
+import systems.memetic.memetiq.tables.records.MediaRecord;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
+import static systems.memetic.memetiq.Tables.MEDIA;
 
 @Slf4j
 @Service
@@ -24,15 +25,41 @@ public class MediaService {
     private final DSLContext create;
     private final ObjectService objectService;
 
-    public List<String> getAll() {
-        log.info("test log from getAll");
-        
-        Result<Record> record = create.select().from(MEDIA).fetch();
-        return record.stream().map(x -> x.get(MEDIA.NAME)).toList();
+    public List<Media> getAll() {
+        return getMedia(create.select().from(MEDIA)
+            .fetchInto(MEDIA)).toList();
+    }
+
+    private Stream<Media> getMedia(Result<MediaRecord> record) {
+        return record.stream()
+            .map(CheckedFunction1.liftTry(Media::new))
+            .flatMap(Try::toJavaStream);
+    }
+
+    public Optional<Media> getByName(String name) {
+        Result<MediaRecord> record = create.select().from(MEDIA)
+            .where(MEDIA.NAME.eq(name)).fetchInto(MEDIA);
+
+        return getMedia(record).findAny();
     }
 
     @SneakyThrows
     public String addMedia(String name, byte[] file) {
-        return objectService.store(name, file).toString();
+        getByName(name).ifPresent(x -> {
+            throw new RuntimeException(String.format(
+                "Media called %s already exists!", name));
+        });
+
+        String url = objectService.store(name, file).toString();
+
+        int affected = create.insertInto(MEDIA)
+            .columns(
+                MEDIA.NAME,
+                MEDIA.URL
+            ).values(name, url).execute();
+
+        log.info("affected: {}", affected);
+
+        return url;
     }
 }
