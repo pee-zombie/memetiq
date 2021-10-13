@@ -12,6 +12,8 @@ import systems.memetic.memetiq.domain.Media;
 import systems.memetic.memetiq.service.object.ObjectService;
 import systems.memetic.memetiq.tables.records.MediaRecord;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -55,8 +57,9 @@ public class MediaService {
         int affected = create.insertInto(MEDIA)
             .columns(
                 MEDIA.NAME,
-                MEDIA.URL
-            ).values(name, url).execute();
+                MEDIA.URL,
+                MEDIA.CREATED
+            ).values(name, url, LocalDateTime.now()).execute();
 
         log.info("affected: {}", affected);
 
