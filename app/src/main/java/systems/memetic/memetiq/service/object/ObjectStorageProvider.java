@@ -11,4 +11,6 @@ public interface ObjectStorageProvider {
     Boolean checkKeyExists(String name);
 
     URL add(String name, byte[] media);
+
+    void remove(String name);
 }

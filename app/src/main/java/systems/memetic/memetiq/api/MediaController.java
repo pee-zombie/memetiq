@@ -38,4 +38,9 @@ public class MediaController {
 
         return mediaService.addMedia(name, multipartFile.getBytes());
     }
+
+    @DeleteMapping("/media/{name}")
+    public void deleteMedia(@PathVariable("name") String name) {
+        mediaService.deleteMedia(name);
+    }
 }

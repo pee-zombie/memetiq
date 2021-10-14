@@ -64,4 +64,17 @@ public class MediaService {
 
         return url;
     }
+
+    public void deleteMedia(String name) {
+        Media media = getByName(name).orElseThrow(() ->
+            new RuntimeException(String.format(
+                "Media called %s does not exist!", name)));
+
+        objectService.delete(name);
+
+        int affected = create.delete(MEDIA)
+            .where(MEDIA.NAME.eq(name)).execute();
+
+        log.info("affected: {}", affected);
+    }
 }

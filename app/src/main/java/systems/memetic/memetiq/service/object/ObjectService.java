@@ -19,4 +19,8 @@ public class ObjectService {
     public URL store(String name, byte[] bytes) {
         return provider.add(name, bytes);
     }
+
+    public void delete(String name) {
+        provider.remove(name);
+    }
 }

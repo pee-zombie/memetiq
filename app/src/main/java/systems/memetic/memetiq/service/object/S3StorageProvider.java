@@ -64,6 +64,12 @@ public class S3StorageProvider implements ObjectStorageProvider {
         return getUrlForKey(name);
     }
 
+    @Override
+    public void remove(String name) {
+        var response = this.client.deleteObject(
+            builder -> builder.bucket(BUCKET_NAME).key(name));
+    }
+
     private URL getUrlForKey(String name) {
         return this.client.utilities().getUrl(x -> x.bucket(BUCKET_NAME).key(name));
     }
