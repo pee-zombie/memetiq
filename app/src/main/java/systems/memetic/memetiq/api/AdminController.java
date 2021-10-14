@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import systems.memetic.memetiq.domain.Media;
 import systems.memetic.memetiq.service.media.MediaService;
+import systems.memetic.memetiq.service.object.ObjectStorageProvider;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class AdminController {
     private final DSLContext create;
     private final MediaService mediaService;
+    private final ObjectStorageProvider storageProvider;
 
     @Value("classpath:data.sql")
     Resource dataSql;
@@ -31,6 +33,8 @@ public class AdminController {
     public void deleteDb() {
         int affected = create.execute("DROP ALL OBJECTS DELETE FILES");
         log.info("Deleted {} objects!", affected);
+
+        storageProvider.clear();
     }
 
     @PostMapping("/db")

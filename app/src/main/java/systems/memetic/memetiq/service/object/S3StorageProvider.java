@@ -1,5 +1,6 @@
 package systems.memetic.memetiq.service.object;
 
+import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
@@ -13,6 +14,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
+@Slf4j
 public class S3StorageProvider implements ObjectStorageProvider {
     private final S3Client client;
 
@@ -72,5 +74,13 @@ public class S3StorageProvider implements ObjectStorageProvider {
 
     private URL getUrlForKey(String name) {
         return this.client.utilities().getUrl(x -> x.bucket(BUCKET_NAME).key(name));
+    }
+
+    @Override
+    public void clear() {
+        log.info("Clearing object storage...");
+
+        this.client.deleteBucket(builder ->
+            builder.bucket(BUCKET_NAME));
     }
 }

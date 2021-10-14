@@ -13,4 +13,6 @@ public interface ObjectStorageProvider {
     URL add(String name, byte[] media);
 
     void remove(String name);
+
+    void clear();
 }
